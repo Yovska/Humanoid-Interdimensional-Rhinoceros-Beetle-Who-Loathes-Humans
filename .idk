@@ -1,0 +1,85 @@
+
+/* 
+Expressive Wearable Project
+Interdimensional Beetle Who Hates Humans Fashion Look
+Yovska Moreno
+GDES-3015-001 Wearable Computing
+OCAD University 
+Created on Feb 21st 2017
+Based on: 
+Using an FSR, by Lady Ada, https://learn.adafruit.com/force-sensitive-resistor-fsr/using-an-fsr
+Blink, by Lady Ada, https://learn.adafruit.com/adafruit-feather-32u4-basic-proto/using-with-arduino-ide
+*/
+
+int fsrAnalogPin = 2;     // the FSR and 10K pulldown are connected to a0
+int LEDpin = 11; // Green Set of LEDs
+int LEDpin2 = 12; //Red Set of LEDs
+int fsrReading;     // the analog reading from the FSR resistor divider
+ 
+void setup(void) {
+  // We'll send debugging information via the Serial monitor
+  Serial.begin(9600);   
+  pinMode (LEDpin, OUTPUT);
+  pinMode (LEDpin2, OUTPUT);
+
+  
+}
+  
+void loop(void) {
+  fsrReading = analogRead(fsrAnalogPin);  
+ 
+  Serial.print("Analog reading = ");
+  Serial.print(fsrReading);     // the raw analog reading
+ 
+  // We'll have a few threshholds, qualitatively determined
+  if (fsrReading < 10) {
+    digitalWrite(LEDpin, LOW);   
+    digitalWrite(LEDpin2, LOW); 
+    Serial.println(" - No pressure");
+  } else if (fsrReading < 100) {
+    digitalWrite(LEDpin, LOW);
+    delay(1000);  
+    digitalWrite(LEDpin, HIGH);
+    delay(1000);    
+    Serial.println(" - light nibble");  
+  } else if (fsrReading < 300) {
+   digitalWrite(LEDpin, LOW);
+    delay(800);  
+    digitalWrite(LEDpin, HIGH);
+    delay(800);  
+    Serial.println(" - nibble");
+  } else if (fsrReading < 400) {
+    digitalWrite(LEDpin, LOW);
+    delay(550);  
+    digitalWrite(LEDpin, HIGH);
+    delay(550);  
+    Serial.println(" - bite");
+     } else if (fsrReading < 500) {
+    digitalWrite(LEDpin, LOW);
+    delay(300);  
+    digitalWrite(LEDpin, HIGH);
+    delay(300);  
+    Serial.println(" - strong bite");
+     } else if (fsrReading < 600) {
+    digitalWrite(LEDpin, LOW);
+    delay(100);  
+    digitalWrite(LEDpin, HIGH);
+    delay(100); 
+    digitalWrite(LEDpin, LOW);
+    delay(100); 
+    Serial.println(" - JAWS");
+  } else if (fsrReading < 650) {
+    digitalWrite(LEDpin2, LOW);
+    delay(50);  
+    digitalWrite(LEDpin2, HIGH);
+    delay(50); 
+    digitalWrite(LEDpin2, LOW);
+    delay(50);
+    Serial.println(" - STRONG JAWS");
+  } else {
+    digitalWrite(LEDpin2, HIGH);
+    Serial.println(" - UTTER DESTRUCTION"); //Not adding any delay or low after this will keep the lights on unless pressure 0)
+  }
+  delay(1000);
+} 
+
